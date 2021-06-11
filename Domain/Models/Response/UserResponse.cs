@@ -1,8 +1,8 @@
 using System;
 
-namespace MediatR.CQRS.Project.Domain.Commands.Response
+namespace MediatR.CQRS.Project.Domain.Models.Response
 {
-    public class CreateUserResponse
+    public class UserResponse
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

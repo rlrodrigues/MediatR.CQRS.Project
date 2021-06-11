@@ -1,24 +1,18 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using MediatR.CQRS.Project.Domain.Commands.Requests;
-using MediatR.CQRS.Project.Domain.Commands.Response;
+using MediatR.CQRS.Project.Domain.Commands;
+using MediatR.CQRS.Project.Domain.Models.Response;
+
 
 namespace  MediatR.CQRS.Project.Domain.Handlers
 {
-    public class CreateUserHandler : IRequestHandler<CreateUserRequest, CreateUserResponse>
+    public class CreateUserHandler : IRequestHandler<CreateUserCommand, Unit>
     {
-        public Task<CreateUserResponse> Handle(CreateUserRequest request, CancellationToken cancellationToken)
+        public Task<Unit> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
-            var result = new CreateUserResponse
-            {
-                Id = Guid.NewGuid(),
-                Name = request.Name,
-                Email = request.Email,
-                Date = DateTime.Now
-            };
-
-            return Task.FromResult(result);
+            // Adicionar utilizando repository
+            return Task.FromResult(Unit.Value);
         }
     }
 }

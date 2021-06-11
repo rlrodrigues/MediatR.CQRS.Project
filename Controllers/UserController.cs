@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
-using MediatR.CQRS.Project.Domain.Commands.Requests;
-using MediatR.CQRS.Project.Domain.Commands.Response;
+using MediatR.CQRS.Project.Domain.Commands;
+using MediatR.CQRS.Project.Domain.Models.Response;
+using MediatR.CQRS.Project.Domain.Queries;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MediatR.CQRS.Project.Controllers
@@ -12,13 +13,30 @@ namespace MediatR.CQRS.Project.Controllers
     {
         [HttpPost]
         [Route("Create")]
-        public Task<CreateUserResponse> Create([FromServices] IMediator mediator, [FromBody] CreateUserRequest request)
+        public async Task<IActionResult> Create([FromServices] IMediator mediator, [FromBody] CreateUserCommand command)
         {
             try
             {
-                var result = mediator.Send(request);
+                var result = await mediator.Send(command);
+                
+                return Ok(result); 
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
 
-                return result;
+        [HttpGet]
+        [Route("GetAllUsers")]
+        public async Task<IActionResult> GetAllUsers([FromServices] IMediator mediator)
+        {
+            try
+            {
+                var query = new GetAllUsersQuery();
+                var result = await mediator.Send(query);
+                
+                return Ok(result); 
             }
             catch (Exception)
             {
